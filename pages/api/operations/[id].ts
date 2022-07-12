@@ -4,15 +4,31 @@ import { ResponseFuncs } from '../../../utils/types';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const method: keyof ResponseFuncs = req.method as keyof ResponseFuncs;
-  const catcher = (error: Error) => res.status(400).json({ error });
+  const catcher = (error: Error) =>
+    res.status(400).json({ msg: error.message });
   const id: string = req.query.id as string;
   const handleCase: ResponseFuncs = {
     GET: async (req: NextApiRequest, res: NextApiResponse) => {
       const { Operation } = await connect();
-      res.json(await Operation.findById(id).catch(catcher));
+      try {
+        const gotOperation = await Operation.findById(id);
+        if (!gotOperation)
+          return res.status(400).json({ msg: 'Operation not found!!' });
+        return res.status(200).json(gotOperation);
+      } catch (error: any) {
+        return res.status(500).json({ msg: error.message });
+      }
     },
     PUT: async (req: NextApiRequest, res: NextApiResponse) => {
       const { Operation } = await connect();
+      try {
+        const task = await Operation.findByIdAndUpdate(id, req.body, {
+          new: true,
+        });
+        if (!task) return res.status(404).json({ msg: 'Operation not found!' });
+      } catch (error: any) {
+        return res.status(500).json({ msg: error.message });
+      }
       res.json(
         await Operation.findByIdAndUpdate(id, req.body, { new: true }).catch(
           catcher
