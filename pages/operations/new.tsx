@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import Router, { useRouter } from 'next/router';
 
 const newOperation = () => {
   const [newOperation, setNewOperation] = useState({
@@ -25,6 +26,7 @@ const newOperation = () => {
     // if (Object.keys(errors).length) return setErrors(errors);
     await createOperation();
     console.log('submit');
+    await Router.push('/');
   };
 
   const createOperation = async () => {
