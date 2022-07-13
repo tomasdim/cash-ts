@@ -14,8 +14,17 @@ const Home: NextPage = (props) => {
       {props.operations.map((operation) => (
         <div key={operation._id} className='text-blue-500'>
           {operation.name}
-          <button onClick={() => router.push(`/operations/${operation._id}`)}>
+          <button
+            className='p-3'
+            onClick={() => router.push(`/operations/${operation._id}`)}
+          >
             View More
+          </button>
+          <button
+            className='p-3'
+            onClick={() => router.push(`/operations/${operation._id}/edit`)}
+          >
+            Edit
           </button>
         </div>
       ))}
