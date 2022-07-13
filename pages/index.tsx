@@ -5,10 +5,14 @@ import styles from '../styles/Home.module.css';
 import { Operation } from '../utils/types';
 
 const Home: NextPage = (props) => {
+  if (props.operations.length === 0)
+    return <div>No existen operaciones en la base de datos</div>;
   return (
     <div>
       {props.operations.map((operation) => (
-        <div className='text-blue-500'>{operation.name}</div>
+        <div key={operation._id} className='text-blue-500'>
+          {operation.name}
+        </div>
       ))}
     </div>
   );
