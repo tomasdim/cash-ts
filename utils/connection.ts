@@ -15,6 +15,7 @@ export const connect = async () => {
       date: Date,
       type: String,
       category: String,
+      author: String,
     },
     {
       timestamps: true,
