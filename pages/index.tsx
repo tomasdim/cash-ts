@@ -5,6 +5,8 @@ import { useRouter } from 'next/router';
 import styles from '../styles/Home.module.css';
 import { Operation } from '../utils/types';
 import { getSession, signOut } from 'next-auth/react';
+import { authOptions } from './api/auth/[...nextauth]';
+import { unstable_getServerSession } from 'next-auth/next';
 
 const Home: NextPage = (props) => {
   const router = useRouter();
@@ -47,9 +49,13 @@ const Home: NextPage = (props) => {
 export const getServerSideProps: GetServerSideProps = async (
   context: object
 ) => {
-  const res = await fetch('http://localhost:3000/api/operations');
-  const operations = await res.json();
-  const session = await getSession(context);
+  const session = await unstable_getServerSession(
+    context.req,
+    context.res,
+    authOptions
+  );
+
+  // const session = await getSession(context);
   if (!session)
     return {
       redirect: {
@@ -57,6 +63,10 @@ export const getServerSideProps: GetServerSideProps = async (
         permanent: false,
       },
     };
+  const res = await fetch(
+    `http://localhost:3000/api/operations/author/${session.user.name}`
+  );
+  const operations = await res.json();
   return {
     props: {
       operations: operations,
