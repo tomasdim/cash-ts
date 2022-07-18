@@ -7,7 +7,7 @@ const newOperation = (props) => {
   const [newOperation, setNewOperation] = useState({
     name: '',
     amount: '',
-    type: '',
+    type: 'income',
     category: '',
     author: '',
   });
@@ -68,12 +68,16 @@ const newOperation = (props) => {
           name='amount'
           onChange={handleChange}
         ></input>
-        <input
+        {/* <input
           type='text'
           placeholder='Tipo'
           name='type'
           onChange={handleChange}
-        ></input>
+        ></input> */}
+        <select name='type' onChange={handleChange}>
+          <option value='income'>Income</option>
+          <option value='expense'>Expense</option>
+        </select>
         <input
           type='text'
           placeholder='Categoría'

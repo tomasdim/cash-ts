@@ -33,6 +33,9 @@ const Home: NextPage = (props) => {
               </button>
             </div>
           ))}
+          <button onClick={() => router.push(`/operations/new`)}>
+            Nueva operacion
+          </button>
           <h1>{props.session.user.name}</h1>
           <img src={props.session.user.image}></img>
           <button onClick={() => signOut()}>Logout</button>

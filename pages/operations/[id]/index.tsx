@@ -29,6 +29,7 @@ const OperationId = (props) => {
     <div>
       <h1>{props.operation.name}</h1>
       <p>{props.operation.amount}</p>
+      <p>{props.operation.type}</p>
       <button
         onClick={() => {
           deleteOperation();
