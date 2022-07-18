@@ -73,13 +73,17 @@ function EditOperation() {
           onChange={handleChange}
           value={newOperation.amount}
         ></input>
-        <input
+        {/* <input
           type='text'
           placeholder='Tipo'
           name='type'
           onChange={handleChange}
           value={newOperation.type}
-        ></input>
+        ></input> */}
+        <select name='type' value={newOperation.type} onChange={handleChange}>
+          <option value='income'>Income</option>
+          <option value='expense'>Expense</option>
+        </select>
         <input
           type='text'
           placeholder='Categoría'
