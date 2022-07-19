@@ -10,6 +10,14 @@ import { unstable_getServerSession } from 'next-auth/next';
 
 const Home: NextPage = (props) => {
   const router = useRouter();
+  const exp = props.expenses;
+  const inc = props.income;
+  const sumExp = exp.reduce((accumulator, object) => {
+    return accumulator + object.amount;
+  }, 0);
+  const sumInc = inc.reduce((accumulator, object) => {
+    return accumulator + object.amount;
+  }, 0);
   if (props.operations.length === 0)
     return <div>No existen operaciones en la base de datos</div>;
   return (
@@ -36,6 +44,12 @@ const Home: NextPage = (props) => {
           <button onClick={() => router.push(`/operations/new`)}>
             Nueva operacion
           </button>
+          <h1>Expenses:</h1>
+          {sumExp}
+          <h1>Income:</h1>
+          {sumInc}
+          <h1>Balance:</h1>
+          {sumInc - sumExp}
           <h1>{props.session.user.name}</h1>
           <img src={props.session.user.image}></img>
           <button onClick={() => signOut()}>Logout</button>
@@ -69,11 +83,23 @@ export const getServerSideProps: GetServerSideProps = async (
   const res = await fetch(
     `http://localhost:3000/api/operations/author/${session.user.name}`
   );
+  const resExp = await fetch(
+    `http://localhost:3000/api/operations/expense/${session.user.name}`
+  );
+  const resInc = await fetch(
+    `http://localhost:3000/api/operations/income/${session.user.name}`
+  );
+  const expenses = await resExp.json();
+  const income = await resInc.json();
   const operations = await res.json();
+  console.log(expenses);
+
   return {
     props: {
       operations: operations,
       session: session,
+      expenses: expenses,
+      income: income,
     },
   };
 };
