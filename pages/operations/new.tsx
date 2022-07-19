@@ -68,6 +68,7 @@ const newOperation = (props) => {
           name='amount'
           onChange={handleChange}
         ></input>
+        <input type='date' name='date' onChange={handleChange}></input>
         {/* <input
           type='text'
           placeholder='Tipo'

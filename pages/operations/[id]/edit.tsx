@@ -5,6 +5,7 @@ function EditOperation() {
   const [newOperation, setNewOperation] = useState({
     name: '',
     amount: '',
+    date: '',
     type: '',
     category: '',
   });
@@ -40,9 +41,12 @@ function EditOperation() {
       'http://localhost:3000/api/operations/' + router.query.id
     );
     const data = await res.json();
+    const newDate = data.date.substring(0, 10);
+
     setNewOperation({
       name: data.name,
       amount: data.amount,
+      date: newDate,
       type: data.type,
       category: data.category,
     });
@@ -72,6 +76,12 @@ function EditOperation() {
           name='amount'
           onChange={handleChange}
           value={newOperation.amount}
+        ></input>
+        <input
+          type='date'
+          name='date'
+          onChange={handleChange}
+          value={newOperation.date}
         ></input>
         {/* <input
           type='text'
