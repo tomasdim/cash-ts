@@ -1,12 +1,15 @@
 import { useState } from 'react';
 import Router, { useRouter } from 'next/router';
+import { GetServerSideProps } from 'next';
+import { getSession, signOut } from 'next-auth/react';
 
-const newOperation = () => {
+const newOperation = (props) => {
   const [newOperation, setNewOperation] = useState({
     name: '',
     amount: '',
-    type: '',
+    type: 'income',
     category: '',
+    author: '',
   });
   // const [errors, setErrors] = useState({});
 
@@ -44,7 +47,11 @@ const newOperation = () => {
   };
 
   const handleChange = (e) =>
-    setNewOperation({ ...newOperation, [e.target.name]: e.target.value });
+    setNewOperation({
+      ...newOperation,
+      [e.target.name]: e.target.value,
+      author: props.session.user.name,
+    });
 
   return (
     <div>
@@ -61,12 +68,17 @@ const newOperation = () => {
           name='amount'
           onChange={handleChange}
         ></input>
-        <input
+        <input type='date' name='date' onChange={handleChange}></input>
+        {/* <input
           type='text'
           placeholder='Tipo'
           name='type'
           onChange={handleChange}
-        ></input>
+        ></input> */}
+        <select name='type' onChange={handleChange}>
+          <option value='income'>Income</option>
+          <option value='expense'>Expense</option>
+        </select>
         <input
           type='text'
           placeholder='Categoría'
@@ -77,6 +89,24 @@ const newOperation = () => {
       </form>
     </div>
   );
+};
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: object
+) => {
+  const session = await getSession(context);
+  if (!session)
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  return {
+    props: {
+      session: session,
+    },
+  };
 };
 
 export default newOperation;
