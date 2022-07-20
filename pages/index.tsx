@@ -81,7 +81,7 @@ export const getServerSideProps: GetServerSideProps = async (
       },
     };
   const res = await fetch(
-    `http://localhost:3000/api/operations/author/${session.user.name}`
+    `http://localhost:3000/api/operations?limit=10&author=${session.user.name}`
   );
   const resExp = await fetch(
     `http://localhost:3000/api/operations/expense/${session.user.name}`

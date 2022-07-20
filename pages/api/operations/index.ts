@@ -9,9 +9,24 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const catcher = (error: Error) => res.status(400).json({ error });
 
   const handleCase: ResponseFuncs = {
-    GET: async (req: NextApiRequest, res: NextApiResponse, id) => {
+    GET: async (req: NextApiRequest, res: NextApiResponse) => {
       const { Operation } = await connect();
-      res.json(await Operation.find({}).catch(catcher));
+      const limit = req.query.limit;
+      const author = req.query.author;
+      if (limit && author) {
+        let filteredOperations = await Operation.find({ author: author })
+          .limit(limit)
+          .catch(catcher);
+        res.json(filteredOperations);
+      } else if (limit) {
+        let operations = await Operation.find({}).limit(limit).catch(catcher);
+        res.json(operations);
+      } else if (author) {
+        let operationsAuthor = await Operation.find({ author: author }).catch(
+          catcher
+        );
+        res.json(operationsAuthor);
+      } else res.json(await Operation.find({}).catch(catcher));
     },
     POST: async (req: NextApiRequest, res: NextApiResponse) => {
       const { Operation } = await connect();
