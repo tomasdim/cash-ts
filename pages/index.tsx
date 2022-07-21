@@ -7,6 +7,7 @@ import { Operation } from '../utils/types';
 import { getSession, signOut } from 'next-auth/react';
 import { authOptions } from './api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth/next';
+import Navbar from '../components/Navbar';
 
 const Home: NextPage = (props) => {
   const router = useRouter();
@@ -19,9 +20,24 @@ const Home: NextPage = (props) => {
     return accumulator + object.amount;
   }, 0);
   if (props.operations.length === 0)
-    return <div>No existen operaciones en la base de datos</div>;
+    return (
+      <div>
+        <Navbar
+          username={props.session.user.name}
+          img={props.session.user.image}
+        />
+        <div className='m-auto'>No tienes operaciones</div>
+        <button onClick={() => router.push(`/operations/new`)}>
+          Crear nueva Operacion
+        </button>
+      </div>
+    );
   return (
     <div>
+      <Navbar
+        username={props.session.user.name}
+        img={props.session.user.image}
+      />
       {props.session ? (
         <>
           {props.operations.map((operation) => (
