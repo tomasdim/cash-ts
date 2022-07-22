@@ -5,7 +5,7 @@ import { unstable_getServerSession } from 'next-auth/next';
 import Navbar from '../components/navbar/Navbar';
 
 import NoOperations from '../components/index/NoOperations';
-import MyModal from '../components/modal';
+import MyModal from '../components/modal/Modal';
 
 const Home: NextPage = (props) => {
   const router = useRouter();
@@ -45,41 +45,58 @@ const Home: NextPage = (props) => {
         username={props.session.user.name}
         img={props.session.user.image}
       />
-      <div className='flex'>
-        <h1 className='m-auto text-green-500'>Mis últimas 10 operaciones</h1>
+      <div className='flex justify-center'>
+        <h1 className='text-green-500 flex justify-center'>
+          Mis últimas 10 operaciones
+        </h1>
       </div>
-      <div className='grid grid-cols-7'>
-        <div>Nombre</div>
-        <div>Cantidad</div>
-        <div>Fecha</div>
-        <div>Tipo</div>
-        <div>Categoría</div>
-        <div>Editar</div>
-        <div>Eliminar</div>
+      <div className='overflow-x-auto'>
+        <div className='grid grid-cols-7'>
+          <div className='flex justify-center'>Nombre</div>
+          <div className='flex justify-center'>Cantidad</div>
+          <div className='flex justify-center'>Fecha</div>
+          <div className='flex justify-center'>Tipo</div>
+          <div className='flex justify-center'>Categoría</div>
+          <div className='flex justify-center'>Eliminar</div>
+          <div className='flex justify-center'>Editar</div>
+        </div>
       </div>
       {props.session ? (
         <>
           <div className='grid grid-cols-7'>
             {props.operations.map((operation) => (
               <>
-                <div key={operation._id} className='text-blue-500'>
+                <div
+                  key={operation._id}
+                  className='flex justify-center text-blue-500'
+                >
                   {operation.name}
                 </div>
-                <div>{operation.amount}</div>
-                <div>{operation.date.substring(0, 10)}</div>
-                <div>{operation.type}</div>
-                <div>{operation.category}</div>
-                <div>
+                <div className='flex justify-center text-blue-500'>
+                  {operation.amount}
+                </div>
+                <div className='flex justify-center text-blue-500'>
+                  {operation.date.substring(0, 10)}
+                </div>
+                <div className='flex justify-center text-blue-500'>
+                  {operation.type}
+                </div>
+                <div className='flex justify-center text-blue-500'>
+                  {operation.category}
+                </div>
+                <div className='flex justify-center'>
                   <MyModal function={() => handleDelete(operation._id)} />
                 </div>
-                <button
-                  className='p-3'
-                  onClick={() =>
-                    router.push(`/operations/${operation._id}/edit`)
-                  }
-                >
-                  Edit
-                </button>
+                <div className='flex justify-center py-1'>
+                  <button
+                    className='inline-flex justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
+                    onClick={() =>
+                      router.push(`/operations/${operation._id}/edit`)
+                    }
+                  >
+                    Edit
+                  </button>
+                </div>
               </>
             ))}
 
@@ -98,6 +115,18 @@ const Home: NextPage = (props) => {
           <h1>{props.session.user.name}</h1>
           <img src={props.session.user.image}></img>
           <button onClick={() => signOut()}>Logout</button> */}
+            <div className='flex w-full'>
+              <div className='m-auto'>
+                <button
+                  className='bg-blue-500 p-3 mt-5 rounded-lg text-white hover:bg-blue-400'
+                  onClick={() => router.push(`/operations/new`)}
+                >
+                  Create new operation
+                </button>
+                <h1>Balance:</h1>
+                {sumInc - sumExp}
+              </div>
+            </div>
           </div>
         </>
       ) : (
@@ -105,8 +134,6 @@ const Home: NextPage = (props) => {
           <h1>You need to login!</h1>
         </>
       )}
-      <h1>Balance:</h1>
-      {sumInc - sumExp}
     </div>
   );
 };

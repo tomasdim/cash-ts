@@ -1,7 +1,10 @@
 import { useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
+import Navbar from '../../../components/navbar/Navbar';
+import { getSession } from 'next-auth/react';
+import { GetServerSideProps } from 'next';
 
-function EditOperation() {
+function EditOperation(props) {
   const [newOperation, setNewOperation] = useState({
     name: '',
     amount: '',
@@ -62,51 +65,102 @@ function EditOperation() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='Nombre'
-          name='name'
-          onChange={handleChange}
-          value={newOperation.name}
-        ></input>
-        <input
-          type='text'
-          placeholder='Cantidad'
-          name='amount'
-          onChange={handleChange}
-          value={newOperation.amount}
-        ></input>
-        <input
-          type='date'
-          name='date'
-          onChange={handleChange}
-          value={newOperation.date}
-        ></input>
-        {/* <input
-          type='text'
-          placeholder='Tipo'
-          name='type'
-          onChange={handleChange}
-          value={newOperation.type}
-        ></input> */}
-        <select name='type' value={newOperation.type} onChange={handleChange}>
-          <option value='income'>Income</option>
-          <option value='expense'>Expense</option>
-        </select>
-        <input
-          type='text'
-          placeholder='Categoría'
-          name='category'
-          onChange={handleChange}
-          value={newOperation.category}
-        ></input>
-        <button className='bg-blue-400 text-white border-red-300'>
-          Update
-        </button>
-      </form>
+      <Navbar
+        username={props.session.user.name}
+        img={props.session.user.image}
+      />
+      <div className='background h-screen'>
+        <div className='block lg:mx-60   pt-5'>
+          <form className=' bg-white rounded-lg p-5' onSubmit={handleSubmit}>
+            <div>
+              <label className='block text-sm font-medium text-gray-500'>
+                Nombre
+              </label>
+              <input
+                type='text'
+                placeholder='Nombre'
+                name='name'
+                required
+                maxlength='35'
+                onChange={handleChange}
+                value={newOperation.name}
+                className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              ></input>
+              <label className=' block text-sm font-medium text-gray-500 py-3'>
+                Cantidad ($)
+              </label>
+              <input
+                type='text'
+                placeholder='Cantidad'
+                name='amount'
+                required
+                onChange={handleChange}
+                value={newOperation.amount}
+                className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              ></input>
+            </div>
+            <label className=' block text-sm font-medium text-gray-500 py-3'>
+              Fecha
+            </label>
+            <input
+              className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              type='date'
+              name='date'
+              required
+              onChange={handleChange}
+              value={newOperation.date}
+            ></input>
+            <label className='block text-sm font-medium text-gray-500 py-3'>
+              Tipo
+            </label>
+            <select
+              className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              required
+              name='type'
+              value={newOperation.type}
+              onChange={handleChange}
+            >
+              <option value='income'>Income</option>
+              <option value='expense'>Expense</option>
+            </select>
+            <label className=' block text-sm font-medium text-gray-500 py-3'>
+              Categoría
+            </label>
+            <input
+              required
+              className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              type='text'
+              placeholder='Categoría'
+              name='category'
+              onChange={handleChange}
+              value={newOperation.category}
+            ></input>
+            <button className='w-full p-3 mt-3 rounded-lg bg-blue-400 text-white border-red-300'>
+              Update
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 }
+
+export const getServerSideProps: GetServerSideProps = async (
+  context: object
+) => {
+  const session = await getSession(context);
+  if (!session)
+    return {
+      redirect: {
+        destination: '/login',
+        permanent: false,
+      },
+    };
+  return {
+    props: {
+      session: session,
+    },
+  };
+};
 
 export default EditOperation;
