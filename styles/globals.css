@@ -18,3 +18,12 @@ a {
 * {
   box-sizing: border-box;
 }
+
+.background {
+  background: rgb(2, 0, 36);
+  background: linear-gradient(
+    180deg,
+    rgba(2, 0, 36, 1) 36%,
+    rgba(220, 220, 220, 1) 37%
+  );
+}

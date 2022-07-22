@@ -11,7 +11,7 @@ const loginPage = () => {
   }
 
   return (
-    <div className='bg-gradient-to-b from-indigo-500 h-screen flex'>
+    <div className='background h-screen flex'>
       <div className='m-auto bg-gray-100 p-10 flex flex-col justify-evenly rounded-md'>
         <div
           className='bg-zinc-700 my-3 hover:bg-zinc-600 text-white cursor-pointer flex items-center p-3 justify-around shadow-lg'

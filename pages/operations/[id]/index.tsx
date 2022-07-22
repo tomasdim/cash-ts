@@ -27,6 +27,7 @@ const OperationId = (props) => {
     );
   return (
     <div>
+      <h1>Are you sure you want to delete this operation?</h1>
       <h1>{props.operation.name}</h1>
       <p>{props.operation.amount}</p>
       <p>{props.operation.type}</p>

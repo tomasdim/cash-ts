@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut } from 'next-auth/react';
+import Navbar from '../../components/navbar/Navbar';
 
 const newOperation = (props) => {
   const [newOperation, setNewOperation] = useState({
@@ -55,38 +56,83 @@ const newOperation = (props) => {
 
   return (
     <div>
-      <form onSubmit={handleSubmit}>
-        <input
-          type='text'
-          placeholder='Nombre'
-          name='name'
-          onChange={handleChange}
-        ></input>
-        <input
-          type='text'
-          placeholder='Cantidad'
-          name='amount'
-          onChange={handleChange}
-        ></input>
-        <input type='date' name='date' onChange={handleChange}></input>
-        {/* <input
+      <Navbar
+        username={props.session.user.name}
+        img={props.session.user.image}
+      />
+      <div className='background h-screen'>
+        <div className='block lg:mx-60   pt-5'>
+          <form className=' bg-white rounded-lg p-5' onSubmit={handleSubmit}>
+            <div>
+              <label className='block text-sm font-medium text-gray-500'>
+                Nombre
+              </label>
+              <input
+                type='text'
+                placeholder='Nombre'
+                name='name'
+                required
+                maxlength='35'
+                onChange={handleChange}
+                className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              ></input>
+              <label className=' block text-sm font-medium text-gray-500 py-3'>
+                Cantidad ($)
+              </label>
+              <input
+                className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+                type='number'
+                placeholder='Cantidad'
+                required
+                name='amount'
+                onChange={handleChange}
+              ></input>
+            </div>
+            <label className=' block text-sm font-medium text-gray-500 py-3'>
+              Fecha
+            </label>
+            <input
+              className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              type='date'
+              required
+              name='date'
+              onChange={handleChange}
+            ></input>
+            {/* <input
           type='text'
           placeholder='Tipo'
           name='type'
           onChange={handleChange}
         ></input> */}
-        <select name='type' onChange={handleChange}>
-          <option value='income'>Income</option>
-          <option value='expense'>Expense</option>
-        </select>
-        <input
-          type='text'
-          placeholder='Categoría'
-          name='category'
-          onChange={handleChange}
-        ></input>
-        <button className='bg-blue-400 text-white border-red-300'>Save</button>
-      </form>
+            <label className='block text-sm font-medium text-gray-500 py-3'>
+              Tipo
+            </label>
+            <select
+              className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              name='type'
+              required
+              onChange={handleChange}
+            >
+              <option value='income'>Income</option>
+              <option value='expense'>Expense</option>
+            </select>
+            <label className=' block text-sm font-medium text-gray-500 py-3'>
+              Categoría
+            </label>
+            <input
+              className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
+              type='text'
+              placeholder='Categoría'
+              name='category'
+              required
+              onChange={handleChange}
+            ></input>
+            <button className='w-full p-3 mt-3 rounded-lg bg-blue-400 text-white border-red-300'>
+              Save
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
   );
 };

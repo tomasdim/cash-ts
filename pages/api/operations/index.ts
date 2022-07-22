@@ -16,6 +16,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       if (limit && author) {
         let filteredOperations = await Operation.find({ author: author })
           .limit(limit)
+          .sort({ createdAt: -1 })
           .catch(catcher);
         res.json(filteredOperations);
       } else if (limit) {
