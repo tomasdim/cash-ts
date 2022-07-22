@@ -1,11 +1,11 @@
 import type { NextPage, GetServerSideProps } from 'next';
 import { useRouter } from 'next/router';
-import { signOut } from 'next-auth/react';
 import { authOptions } from './api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth/next';
 import Navbar from '../components/navbar/Navbar';
-import Image from 'next/image';
+
 import NoOperations from '../components/index/NoOperations';
+import MyModal from '../components/modal';
 
 const Home: NextPage = (props) => {
   const router = useRouter();
@@ -23,7 +23,6 @@ const Home: NextPage = (props) => {
       await fetch(`http://localhost:3000/api/operations/${id}`, {
         method: 'DELETE',
       });
-      console.log('Operation has been deleted!');
       router.push('/');
     } catch (err) {
       console.log(err);
@@ -70,12 +69,9 @@ const Home: NextPage = (props) => {
                 <div>{operation.date.substring(0, 10)}</div>
                 <div>{operation.type}</div>
                 <div>{operation.category}</div>
-                <button
-                  className='p-3'
-                  onClick={() => handleDelete(operation._id)}
-                >
-                  View More
-                </button>
+                <div>
+                  <MyModal function={() => handleDelete(operation._id)} />
+                </div>
                 <button
                   className='p-3'
                   onClick={() =>
