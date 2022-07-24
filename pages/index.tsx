@@ -45,49 +45,69 @@ const Home: NextPage = (props) => {
         username={props.session.user.name}
         img={props.session.user.image}
       />
+
       <div className='flex justify-center'>
         <h1 className='text-green-500 flex justify-center'>
           Mis últimas 10 operaciones
         </h1>
       </div>
-      <div className='overflow-x-auto'>
-        <div className='grid grid-cols-7'>
-          <div className='flex justify-center'>Nombre</div>
-          <div className='flex justify-center'>Cantidad</div>
-          <div className='flex justify-center'>Fecha</div>
-          <div className='flex justify-center'>Tipo</div>
-          <div className='flex justify-center'>Categoría</div>
-          <div className='flex justify-center'>Eliminar</div>
-          <div className='flex justify-center'>Editar</div>
-        </div>
-      </div>
-      {props.session ? (
-        <>
-          <div className='grid grid-cols-7'>
+      <div className='overflow-auto rounded-lg shadow px-3'>
+        <table className='w-full'>
+          <thead className='border-b-2 border-gray-200'>
+            <tr className='bg-white'>
+              <th className='p-3 text-sm font-semibold tracking-wide text-left'>
+                Nombre
+              </th>
+              <th className='w-28 p-3 text-sm font-semibold tracking-wide text-left'>
+                Cantidad ($)
+              </th>
+              <th className='w-32 p-3 text-sm font-semibold tracking-wide text-left'>
+                Fecha
+              </th>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+                Tipo
+              </th>
+              <th className='w-40 p-3 text-sm font-semibold tracking-wide text-left'>
+                Categoría
+              </th>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+                Eliminar
+              </th>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+                Editar
+              </th>
+            </tr>
+          </thead>
+          <tbody className='divide-y divide-gray-200'>
             {props.operations.map((operation) => (
-              <>
-                <div
-                  key={operation._id}
-                  className='flex justify-center text-blue-500'
-                >
+              <tr className='bg-white' key={operation._id}>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.name}
-                </div>
-                <div className='flex justify-center text-blue-500'>
+                </td>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.amount}
-                </div>
-                <div className='flex justify-center text-blue-500'>
+                </td>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.date.substring(0, 10)}
-                </div>
-                <div className='flex justify-center text-blue-500'>
-                  {operation.type}
-                </div>
-                <div className='flex justify-center text-blue-500'>
+                </td>
+                <td className='p-3 text-sm whitespace-nowrap'>
+                  <span
+                    className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
+                      operation.type === 'income'
+                        ? 'text-green-800 bg-green-300 rounded-lg'
+                        : 'text-red-500 bg-red-300 rounded-lg'
+                    }`}
+                  >
+                    {operation.type}
+                  </span>
+                </td>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.category}
-                </div>
-                <div className='flex justify-center'>
+                </td>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   <MyModal function={() => handleDelete(operation._id)} />
-                </div>
-                <div className='flex justify-center py-1'>
+                </td>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   <button
                     className='inline-flex justify-center rounded-md border border-transparent bg-blue-500 px-4 py-2 text-sm font-medium text-white hover:bg-blue-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
                     onClick={() =>
@@ -96,44 +116,28 @@ const Home: NextPage = (props) => {
                   >
                     Edit
                   </button>
-                </div>
-              </>
+                </td>
+              </tr>
             ))}
+          </tbody>
+        </table>
+      </div>
 
-            {/* <button
-            className='bg-blue-500 p-3 mt-5 rounded-lg text-white hover:bg-blue-400'
+      <div className='mt-10 flex w-full items-center justify-around'>
+        <div className=' flex items-center m-auto'>
+          <button
+            className='bg-blue-500 p-3  rounded-lg text-white hover:bg-blue-400'
             onClick={() => router.push(`/operations/new`)}
           >
             Create new operation
           </button>
-          <h1>Expenses:</h1>
-          {sumExp}
-          <h1>Income:</h1>
-          {sumInc}
-          <h1>Balance:</h1>
-          {sumInc - sumExp}
-          <h1>{props.session.user.name}</h1>
-          <img src={props.session.user.image}></img>
-          <button onClick={() => signOut()}>Logout</button> */}
-            <div className='flex w-full'>
-              <div className='m-auto'>
-                <button
-                  className='bg-blue-500 p-3 mt-5 rounded-lg text-white hover:bg-blue-400'
-                  onClick={() => router.push(`/operations/new`)}
-                >
-                  Create new operation
-                </button>
-                <h1>Balance:</h1>
-                {sumInc - sumExp}
-              </div>
-            </div>
+          <div className='flex'>
+            <h1 className='text-lg p-3 bg-orange-300 rounded-lg'>
+              Balance: {sumInc - sumExp}
+            </h1>
           </div>
-        </>
-      ) : (
-        <>
-          <h1>You need to login!</h1>
-        </>
-      )}
+        </div>
+      </div>
     </div>
   );
 };
