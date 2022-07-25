@@ -13,7 +13,25 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       const { Operation } = await connect();
       const limit = req.query.limit;
       const author = req.query.author;
-      if (limit && author) {
+      const category = req.query.category;
+      if (limit && author && category) {
+        let filteredOperations = await Operation.find({
+          author: author,
+          category: category,
+        })
+          .limit(limit)
+          .sort({ createdAt: -1 })
+          .catch(catcher);
+        res.json(filteredOperations);
+      } else if (author && category) {
+        let filteredOperations = await Operation.find({
+          author: author,
+          category: category,
+        })
+          .sort({ createdAt: -1 })
+          .catch(catcher);
+        res.json(filteredOperations);
+      } else if (limit && author) {
         let filteredOperations = await Operation.find({ author: author })
           .limit(limit)
           .sort({ createdAt: -1 })
