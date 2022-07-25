@@ -3,11 +3,13 @@ import { useRouter } from 'next/router';
 import { authOptions } from './api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth/next';
 import Navbar from '../components/navbar/Navbar';
+import { useState } from 'react';
 
 import NoOperations from '../components/index/NoOperations';
 import MyModal from '../components/modal/Modal';
 
 const Categories: NextPage = (props) => {
+  const [newOperation, setNewOperation] = useState(props.operations);
   const router = useRouter();
   const exp = props.expenses;
   const inc = props.income;
@@ -40,6 +42,17 @@ const Categories: NextPage = (props) => {
     console.log(filteredCategories);
   };
 
+  const handleChange = async (e) => {
+    const filteredOperations = await fetch(
+      `http://localhost:3000/api/operations?category=${e.target.value}&author=${props.session.user.name}`,
+      { method: 'GET' }
+    );
+    const resFiltered = await filteredOperations.json();
+    if (resFiltered.length === 0) {
+      setNewOperation(props.operations);
+    } else setNewOperation(resFiltered);
+  };
+
   if (props.operations.length === 0)
     return (
       <div>
@@ -62,7 +75,7 @@ const Categories: NextPage = (props) => {
         <h1 className='text-green-500 flex justify-center'>
           Mis últimas 10 operaciones
         </h1> */}
-        <select>
+        <select onChange={handleChange}>
           <option>All</option>
           {filteredCategories.map((cat) => (
             <option key={cat} value={cat}>
@@ -99,7 +112,7 @@ const Categories: NextPage = (props) => {
             </tr>
           </thead>
           <tbody className='divide-y divide-gray-200'>
-            {props.operations.map((operation) => (
+            {newOperation.map((operation) => (
               <tr className='bg-white' key={operation._id}>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.name}
