@@ -85,6 +85,7 @@ const newOperation = (props) => {
                 placeholder='Cantidad'
                 required
                 name='amount'
+                max='9999999'
                 onChange={handleChange}
               ></input>
             </div>

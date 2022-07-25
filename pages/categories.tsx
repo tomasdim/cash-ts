@@ -32,7 +32,7 @@ const Categories: NextPage = (props) => {
       await fetch(`http://localhost:3000/api/operations/${id}`, {
         method: 'DELETE',
       });
-      router.push('/');
+      router.push('/categories');
     } catch (err) {
       console.log(err);
     }
@@ -70,11 +70,14 @@ const Categories: NextPage = (props) => {
         img={props.session.user.image}
       />
 
-      <div className='flex justify-center'>
+      <div className='flex justify-center my-3'>
         {/* <button onClick={showCategories}>Mostrar categorias</button>
         <h1 className='text-green-500 flex justify-center'>
           Mis últimas 10 operaciones
         </h1> */}
+        <h1 className='text-green-800 underline flex justify-center text-lg font-semibold'>
+          Filter by category:
+        </h1>
         <select onChange={handleChange}>
           <option>All</option>
           {filteredCategories.map((cat) => (
@@ -91,22 +94,22 @@ const Categories: NextPage = (props) => {
               <th className='p-3 text-sm font-semibold tracking-wide text-left'>
                 Nombre
               </th>
-              <th className='w-28 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-28 p-3 text-sm font-semibold tracking-wide text-center'>
                 Cantidad ($)
               </th>
-              <th className='w-32 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-32 p-3 text-sm font-semibold tracking-wide text-center'>
                 Fecha
               </th>
-              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-center'>
                 Tipo
               </th>
-              <th className='w-40 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-40 p-3 text-sm font-semibold tracking-wide text-center'>
                 Categoría
               </th>
-              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-center'>
                 Eliminar
               </th>
-              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-center'>
                 Editar
               </th>
             </tr>
@@ -117,13 +120,13 @@ const Categories: NextPage = (props) => {
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.name}
                 </td>
-                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap text-center'>
                   {operation.amount}
                 </td>
-                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap text-center'>
                   {operation.date.substring(0, 10)}
                 </td>
-                <td className='p-3 text-sm whitespace-nowrap'>
+                <td className='p-3 text-sm whitespace-nowrap text-center'>
                   <span
                     className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
                       operation.type === 'income'
@@ -134,7 +137,7 @@ const Categories: NextPage = (props) => {
                     {operation.type}
                   </span>
                 </td>
-                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap text-center'>
                   {operation.category}
                 </td>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
@@ -156,8 +159,8 @@ const Categories: NextPage = (props) => {
         </table>
       </div>
 
-      <div className='mt-10 flex w-full items-center justify-around'>
-        <div className=' flex items-center m-auto'>
+      <div className='mt-10  w-full'>
+        <div className='flex justify-around m-auto'>
           <button
             className='bg-blue-500 p-3  rounded-lg text-white hover:bg-blue-400'
             onClick={() => router.push(`/operations/new`)}

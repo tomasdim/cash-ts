@@ -46,8 +46,8 @@ const Home: NextPage = (props) => {
         img={props.session.user.image}
       />
 
-      <div className='flex justify-center'>
-        <h1 className='text-green-500 flex justify-center'>
+      <div className='flex justify-center my-3'>
+        <h1 className='text-green-800 underline flex justify-center text-lg font-semibold'>
           Mis últimas 10 operaciones
         </h1>
       </div>
@@ -58,22 +58,22 @@ const Home: NextPage = (props) => {
               <th className='p-3 text-sm font-semibold tracking-wide text-left'>
                 Nombre
               </th>
-              <th className='w-28 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className=' w-28 p-3 text-sm font-semibold tracking-wide text-center'>
                 Cantidad ($)
               </th>
-              <th className='w-32 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-32 p-3 text-sm font-semibold tracking-wide text-center'>
                 Fecha
               </th>
-              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className=' w-20 p-3 text-sm font-semibold tracking-wide  text-center'>
                 Tipo
               </th>
-              <th className='w-40 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-40 p-3 text-sm font-semibold tracking-wide text-center'>
                 Categoría
               </th>
-              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-center'>
                 Eliminar
               </th>
-              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-left'>
+              <th className='w-20 p-3 text-sm font-semibold tracking-wide text-center'>
                 Editar
               </th>
             </tr>
@@ -84,15 +84,15 @@ const Home: NextPage = (props) => {
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.name}
                 </td>
-                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
+                <td className='text-center p-3 text-sm text-gray-700 whitespace-nowrap'>
                   {operation.amount}
                 </td>
-                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap text-center'>
                   {operation.date.substring(0, 10)}
                 </td>
                 <td className='p-3 text-sm whitespace-nowrap'>
                   <span
-                    className={`p-1.5 text-xs font-medium uppercase tracking-wider ${
+                    className={`p-1.5  text-xs font-medium uppercase tracking-wider ${
                       operation.type === 'income'
                         ? 'text-green-800 bg-green-300 rounded-lg'
                         : 'text-red-500 bg-red-300 rounded-lg'
@@ -101,7 +101,7 @@ const Home: NextPage = (props) => {
                     {operation.type}
                   </span>
                 </td>
-                <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
+                <td className='p-3 text-sm text-gray-700 whitespace-nowrap text-center'>
                   {operation.category}
                 </td>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
@@ -123,8 +123,8 @@ const Home: NextPage = (props) => {
         </table>
       </div>
 
-      <div className='mt-10 flex w-full items-center justify-around'>
-        <div className=' flex items-center m-auto'>
+      <div className='mt-10  w-full'>
+        <div className='flex justify-around  m-auto'>
           <button
             className='bg-blue-500 p-3  rounded-lg text-white hover:bg-blue-400'
             onClick={() => router.push(`/operations/new`)}
