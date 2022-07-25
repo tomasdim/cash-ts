@@ -65,11 +65,11 @@ const newOperation = (props) => {
           <form className=' bg-white rounded-lg p-5' onSubmit={handleSubmit}>
             <div>
               <label className='block text-sm font-medium text-gray-500'>
-                Nombre
+                Name
               </label>
               <input
                 type='text'
-                placeholder='Nombre'
+                placeholder='Name'
                 name='name'
                 required
                 maxlength='35'
@@ -77,12 +77,12 @@ const newOperation = (props) => {
                 className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
               ></input>
               <label className=' block text-sm font-medium text-gray-500 py-3'>
-                Cantidad ($)
+                Amount ($)
               </label>
               <input
                 className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
                 type='number'
-                placeholder='Cantidad'
+                placeholder='Amount'
                 required
                 name='amount'
                 max='9999999'
@@ -90,7 +90,7 @@ const newOperation = (props) => {
               ></input>
             </div>
             <label className=' block text-sm font-medium text-gray-500 py-3'>
-              Fecha
+              Date
             </label>
             <input
               className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
@@ -106,7 +106,7 @@ const newOperation = (props) => {
           onChange={handleChange}
         ></input> */}
             <label className='block text-sm font-medium text-gray-500 py-3'>
-              Tipo
+              Type
             </label>
             <select
               className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
@@ -118,12 +118,12 @@ const newOperation = (props) => {
               <option value='expense'>Expense</option>
             </select>
             <label className=' block text-sm font-medium text-gray-500 py-3'>
-              Categoría
+              Category
             </label>
             <input
               className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
               type='text'
-              placeholder='Categoría'
+              placeholder='Category'
               name='category'
               required
               onChange={handleChange}

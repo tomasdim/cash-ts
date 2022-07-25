@@ -48,7 +48,7 @@ const Home: NextPage = (props) => {
 
       <div className='flex justify-center my-3'>
         <h1 className='text-green-800 underline flex justify-center text-lg font-semibold'>
-          Mis últimas 10 operaciones
+          Last 10 operations
         </h1>
       </div>
       <div className='overflow-auto rounded-lg shadow px-3'>
@@ -56,25 +56,25 @@ const Home: NextPage = (props) => {
           <thead className='border-b-2 border-gray-200'>
             <tr className='bg-white'>
               <th className='p-3 text-sm font-semibold tracking-wide text-left'>
-                Nombre
+                Name
               </th>
               <th className=' w-28 p-3 text-sm font-semibold tracking-wide text-center'>
-                Cantidad ($)
+                Amount ($)
               </th>
               <th className='w-32 p-3 text-sm font-semibold tracking-wide text-center'>
-                Fecha
+                Date
               </th>
               <th className=' w-20 p-3 text-sm font-semibold tracking-wide  text-center'>
-                Tipo
+                Type
               </th>
               <th className='w-40 p-3 text-sm font-semibold tracking-wide text-center'>
-                Categoría
+                Category
               </th>
               <th className='w-20 p-3 text-sm font-semibold tracking-wide text-center'>
-                Eliminar
+                Delete
               </th>
               <th className='w-20 p-3 text-sm font-semibold tracking-wide text-center'>
-                Editar
+                Edit
               </th>
             </tr>
           </thead>
