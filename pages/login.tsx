@@ -2,7 +2,7 @@ import { useRouter } from 'next/router';
 import { signIn, useSession } from 'next-auth/react';
 import { IconCart, IconGoogle, IconFacebook } from '../components/icons';
 
-const loginPage = () => {
+const LoginPage = () => {
   const router = useRouter();
   const { data: session, status } = useSession();
 
@@ -39,4 +39,4 @@ const loginPage = () => {
   );
 };
 
-export default loginPage;
+export default LoginPage;

@@ -4,7 +4,7 @@ import { GetServerSideProps } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import Navbar from '../../components/navbar/Navbar';
 
-const newOperation = (props) => {
+const NewOperation = (props) => {
   const [newOperation, setNewOperation] = useState({
     name: '',
     amount: '',
@@ -72,7 +72,7 @@ const newOperation = (props) => {
                 placeholder='Name'
                 name='name'
                 required
-                maxlength='35'
+                maxLength='35'
                 onChange={handleChange}
                 className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
               ></input>
@@ -156,4 +156,4 @@ export const getServerSideProps: GetServerSideProps = async (
   };
 };
 
-export default newOperation;
+export default NewOperation;

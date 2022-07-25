@@ -8,7 +8,7 @@ const NoOperations = () => {
       <div className='flex items-center flex-col'>
         <Image src='/img/no_operations.svg' alt='' height={250} width={250} />
         <div className='text-lg underline underline-offset-1'>
-          You don't have any registered operation!
+          You don&apos;t have any registered operation!
         </div>
         <button
           className='bg-blue-500 p-3 mt-5 rounded-lg text-white hover:bg-blue-400'
