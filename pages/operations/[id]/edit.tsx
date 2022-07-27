@@ -28,13 +28,16 @@ function EditOperation(props: Props) {
 
   const updateOperation = async () => {
     try {
-      await fetch('http://localhost:3000/api/operations/' + router.query.id, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(newOperation),
-      });
+      await fetch(
+        `https://cash-ts-tomasdim.vercel.app/api/operations/` + router.query.id,
+        {
+          method: 'PUT',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify(newOperation),
+        }
+      );
     } catch (error) {
       console.log(error);
     }
@@ -42,7 +45,7 @@ function EditOperation(props: Props) {
 
   const getOperation = async () => {
     const res = await fetch(
-      'http://localhost:3000/api/operations/' + router.query.id
+      `https://cash-ts-tomasdim.vercel.app/api/operations/` + router.query.id
     );
     const data = await res.json();
     const newDate = data.date.substring(0, 10);

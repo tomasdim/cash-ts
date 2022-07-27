@@ -20,7 +20,7 @@ const Home: NextPage<Props> = (props: Props) => {
 
   const handleDelete = async (id: string) => {
     try {
-      await fetch(`http://localhost:3000/api/operations/${id}`, {
+      await fetch(`https://cash-ts-tomasdim.vercel.app/api/operations/${id}`, {
         method: 'DELETE',
       });
       router.push('/');
@@ -158,13 +158,13 @@ export const getServerSideProps: GetServerSideProps = async (context) => {
       },
     };
   const res = await fetch(
-    `http://localhost:3000/api/operations?limit=10&author=${session?.user?.name}`
+    `https://cash-ts-tomasdim.vercel.app/api/operations?limit=10&author=${session?.user?.name}`
   );
   const resExp = await fetch(
-    `http://localhost:3000/api/operations/expense/${session?.user?.name}`
+    `https://cash-ts-tomasdim.vercel.app/api/operations/expense/${session?.user?.name}`
   );
   const resInc = await fetch(
-    `http://localhost:3000/api/operations/income/${session?.user?.name}`
+    `https://cash-ts-tomasdim.vercel.app/api/operations/income/${session?.user?.name}`
   );
   const expenses = await resExp.json();
   const income = await resInc.json();
