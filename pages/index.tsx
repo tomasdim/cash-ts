@@ -3,11 +3,11 @@ import { useRouter } from 'next/router';
 import { authOptions } from './api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth/next';
 import Navbar from '../components/navbar/Navbar';
-
+import { Props } from '../utils/types';
 import NoOperations from '../components/index/NoOperations';
 import MyModal from '../components/modal/Modal';
 
-const Home: NextPage = (props) => {
+const Home: NextPage<Props> = (props: Props) => {
   const router = useRouter();
   const exp = props.expenses;
   const inc = props.income;
@@ -18,7 +18,7 @@ const Home: NextPage = (props) => {
     return accumulator + object.amount;
   }, 0);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
       await fetch(`http://localhost:3000/api/operations/${id}`, {
         method: 'DELETE',
@@ -105,7 +105,7 @@ const Home: NextPage = (props) => {
                   {operation.category}
                 </td>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
-                  <MyModal function={() => handleDelete(operation._id)} />
+                  <MyModal function={() => handleDelete(operation._id!)} />
                 </td>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   <button
@@ -142,9 +142,7 @@ const Home: NextPage = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: object
-) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -160,13 +158,13 @@ export const getServerSideProps: GetServerSideProps = async (
       },
     };
   const res = await fetch(
-    `http://localhost:3000/api/operations?limit=10&author=${session.user.name}`
+    `http://localhost:3000/api/operations?limit=10&author=${session?.user?.name}`
   );
   const resExp = await fetch(
-    `http://localhost:3000/api/operations/expense/${session.user.name}`
+    `http://localhost:3000/api/operations/expense/${session?.user?.name}`
   );
   const resInc = await fetch(
-    `http://localhost:3000/api/operations/income/${session.user.name}`
+    `http://localhost:3000/api/operations/income/${session?.user?.name}`
   );
   const expenses = await resExp.json();
   const income = await resInc.json();

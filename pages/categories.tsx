@@ -3,12 +3,12 @@ import { useRouter } from 'next/router';
 import { authOptions } from './api/auth/[...nextauth]';
 import { unstable_getServerSession } from 'next-auth/next';
 import Navbar from '../components/navbar/Navbar';
-import { useState } from 'react';
-
+import { ChangeEvent, useState } from 'react';
 import NoOperations from '../components/index/NoOperations';
 import MyModal from '../components/modal/Modal';
+import { Props } from '../utils/types';
 
-const Categories: NextPage = (props) => {
+const Categories: NextPage<Props> = (props: Props) => {
   const [newOperation, setNewOperation] = useState(props.operations);
   const router = useRouter();
   const exp = props.expenses;
@@ -21,13 +21,13 @@ const Categories: NextPage = (props) => {
     return accumulator + object.amount;
   }, 0);
 
-  const removeDuplicates = (data) => {
+  const removeDuplicates = (data: string[]) => {
     return data.filter((value, index) => data.indexOf(value) === index);
   };
 
-  const filteredCategories = removeDuplicates(cat);
+  const filteredCategories = removeDuplicates(cat as string[]);
 
-  const handleDelete = async (id) => {
+  const handleDelete = async (id: string) => {
     try {
       await fetch(`http://localhost:3000/api/operations/${id}`, {
         method: 'DELETE',
@@ -42,7 +42,7 @@ const Categories: NextPage = (props) => {
     console.log(filteredCategories);
   };
 
-  const handleChange = async (e) => {
+  const handleChange = async (e: ChangeEvent<HTMLSelectElement>) => {
     const filteredOperations = await fetch(
       `http://localhost:3000/api/operations?category=${e.target.value}&author=${props.session.user.name}`,
       { method: 'GET' }
@@ -80,7 +80,7 @@ const Categories: NextPage = (props) => {
         </h1>
         <select className='border border-green-800 m-1' onChange={handleChange}>
           <option>All</option>
-          {filteredCategories.map((cat) => (
+          {filteredCategories.map((cat: string) => (
             <option key={cat} value={cat}>
               {cat}
             </option>
@@ -141,7 +141,7 @@ const Categories: NextPage = (props) => {
                   {operation.category}
                 </td>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
-                  <MyModal function={() => handleDelete(operation._id)} />
+                  <MyModal function={() => handleDelete(operation._id!)} />
                 </td>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap'>
                   <button
@@ -178,9 +178,7 @@ const Categories: NextPage = (props) => {
   );
 };
 
-export const getServerSideProps: GetServerSideProps = async (
-  context: object
-) => {
+export const getServerSideProps: GetServerSideProps = async (context) => {
   const session = await unstable_getServerSession(
     context.req,
     context.res,
@@ -196,13 +194,13 @@ export const getServerSideProps: GetServerSideProps = async (
       },
     };
   const res = await fetch(
-    `http://localhost:3000/api/operations?limit=10&author=${session.user.name}`
+    `http://localhost:3000/api/operations?limit=10&author=${session?.user?.name}`
   );
   const resExp = await fetch(
-    `http://localhost:3000/api/operations/expense/${session.user.name}`
+    `http://localhost:3000/api/operations/expense/${session?.user?.name}`
   );
   const resInc = await fetch(
-    `http://localhost:3000/api/operations/income/${session.user.name}`
+    `http://localhost:3000/api/operations/income/${session?.user?.name}`
   );
   const expenses = await resExp.json();
   const income = await resInc.json();

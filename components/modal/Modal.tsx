@@ -1,7 +1,8 @@
 import { Fragment, useState } from 'react';
 import { Dialog, Transition } from '@headlessui/react';
+import { ModalProps } from '../../utils/types';
 
-export default function Modal(props) {
+export default function Modal(props: ModalProps) {
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {

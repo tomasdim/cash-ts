@@ -1,10 +1,11 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, ChangeEvent, ChangeEventHandler } from 'react';
 import { useRouter } from 'next/router';
 import Navbar from '../../../components/navbar/Navbar';
 import { getSession } from 'next-auth/react';
 import { GetServerSideProps } from 'next';
+import { Props } from '../../../utils/types';
 
-function EditOperation(props) {
+function EditOperation(props: Props) {
   const [newOperation, setNewOperation] = useState({
     name: '',
     amount: '',
@@ -16,7 +17,7 @@ function EditOperation(props) {
   const router = useRouter();
   const { id } = router.query;
 
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     // let errors = validate();
     // if (Object.keys(errors).length) return setErrors(errors);
@@ -60,8 +61,9 @@ function EditOperation(props) {
     if (router.query.id) getOperation();
   }, []);
 
-  const handleChange = (e) =>
-    setNewOperation({ ...newOperation, [e.target.name]: e.target.value });
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) => setNewOperation({ ...newOperation, [e.target.name]: e.target.value });
 
   return (
     <div>
@@ -81,7 +83,7 @@ function EditOperation(props) {
                 placeholder='Name'
                 name='name'
                 required
-                maxLength='35'
+                maxLength={35}
                 onChange={handleChange}
                 value={newOperation.name}
                 className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'

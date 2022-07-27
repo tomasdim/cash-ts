@@ -1,8 +1,6 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import { connect } from '../../../utils/connection';
 import { ResponseFuncs } from '../../../utils/types';
-import { authOptions } from '../auth/[...nextauth]';
-import { unstable_getServerSession } from 'next-auth/next';
 
 const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const method: keyof ResponseFuncs = req.method as keyof ResponseFuncs;
@@ -19,7 +17,7 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
           author: author,
           category: category,
         })
-          .limit(limit)
+          .limit(limit as unknown as number)
           .sort({ createdAt: -1 })
           .catch(catcher);
         res.json(filteredOperations);
@@ -33,13 +31,16 @@ const handler = async (req: NextApiRequest, res: NextApiResponse) => {
         res.json(filteredOperations);
       } else if (limit && author) {
         let filteredOperations = await Operation.find({ author: author })
-          .limit(limit)
+          .limit(limit as unknown as number)
           .sort({ createdAt: -1 })
           .catch(catcher);
         res.json(filteredOperations);
       } else if (limit) {
-        let operations = await Operation.find({}).limit(limit).catch(catcher);
+        let operations = await Operation.find({})
+          .limit(limit as unknown as number)
+          .catch(catcher);
         res.json(operations);
+        console.log(typeof limit);
       } else if (author) {
         let operationsAuthor = await Operation.find({ author: author }).catch(
           catcher

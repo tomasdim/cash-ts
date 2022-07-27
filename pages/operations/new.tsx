@@ -1,10 +1,11 @@
-import { useState } from 'react';
+import { ChangeEvent, useState } from 'react';
 import Router, { useRouter } from 'next/router';
 import { GetServerSideProps } from 'next';
 import { getSession, signOut } from 'next-auth/react';
 import Navbar from '../../components/navbar/Navbar';
+import { Props } from '../../utils/types';
 
-const NewOperation = (props) => {
+const NewOperation = (props: Props) => {
   const [newOperation, setNewOperation] = useState({
     name: '',
     amount: '',
@@ -12,22 +13,9 @@ const NewOperation = (props) => {
     category: '',
     author: '',
   });
-  // const [errors, setErrors] = useState({});
 
-  // const validate = () => {
-  //   const errors = {};
-  //   if (!newOperation.name) errors.name = 'Title is required!';
-  //   if (!newOperation.amount) errors.amount = 'Amount is required!';
-  //   if (!newOperation.type) errors.type = 'Type is required!';
-  //   if (!newOperation.category) errors.category = 'Category is required!';
-
-  //   return errors;
-  // };
-
-  const handleSubmit = async (e) => {
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    // let errors = validate();
-    // if (Object.keys(errors).length) return setErrors(errors);
     await createOperation();
     console.log('submit');
     await Router.push('/');
@@ -47,7 +35,9 @@ const NewOperation = (props) => {
     }
   };
 
-  const handleChange = (e) =>
+  const handleChange = (
+    e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLSelectElement>
+  ) =>
     setNewOperation({
       ...newOperation,
       [e.target.name]: e.target.value,
@@ -72,7 +62,7 @@ const NewOperation = (props) => {
                 placeholder='Name'
                 name='name'
                 required
-                maxLength='35'
+                maxLength={35}
                 onChange={handleChange}
                 className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
               ></input>
@@ -112,7 +102,7 @@ const NewOperation = (props) => {
               className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
               name='type'
               required
-              onChange={handleChange}
+              onChange={(e) => {}}
             >
               <option value='income'>Income</option>
               <option value='expense'>Expense</option>
