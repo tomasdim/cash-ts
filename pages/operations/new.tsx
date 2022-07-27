@@ -23,7 +23,7 @@ const NewOperation = (props: Props) => {
 
   const createOperation = async () => {
     try {
-      await fetch(`https://cash-ts-tomasdim.vercel.app/api/operations`, {
+      await fetch(`https://cash-ts.vercel.app/api/operations`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',

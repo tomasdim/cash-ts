@@ -29,7 +29,7 @@ function EditOperation(props: Props) {
   const updateOperation = async () => {
     try {
       await fetch(
-        `https://cash-ts-tomasdim.vercel.app/api/operations/` + router.query.id,
+        `https://cash-ts.vercel.app/api/operations/` + router.query.id,
         {
           method: 'PUT',
           headers: {
@@ -45,7 +45,7 @@ function EditOperation(props: Props) {
 
   const getOperation = async () => {
     const res = await fetch(
-      `https://cash-ts-tomasdim.vercel.app/api/operations/` + router.query.id
+      `https://cash-ts.vercel.app/api/operations/` + router.query.id
     );
     const data = await res.json();
     const newDate = data.date.substring(0, 10);
