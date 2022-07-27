@@ -31,10 +31,7 @@ export default function Navbar(props: NavbarProps) {
                     </div>
                   ) : (
                     <div className='block h-6 w-15' aria-hidden='true'>
-                      <MenuIcon
-                        className='h-7 w-7 text-gray-300 hover:text-white'
-                        aria-hidden='true'
-                      />
+                      <MenuIcon />
                     </div>
                   )}
                 </Disclosure.Button>
