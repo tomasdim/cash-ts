@@ -30,7 +30,10 @@ export default function Navbar(props: NavbarProps) {
                       X
                     </div>
                   ) : (
-                    <div className='block h-6 w-15' aria-hidden='true'>
+                    <div
+                      className='block h-6 w-15 z-10 bg-gray-800'
+                      aria-hidden='true'
+                    >
                       <MenuIcon />
                     </div>
                   )}
@@ -59,18 +62,20 @@ export default function Navbar(props: NavbarProps) {
                 </div>
               </div>
               <div className='absolute inset-y-0 right-0 flex items-center pr-2 sm:static sm:inset-auto sm:ml-6 sm:pr-0'>
-                <div className='bg-gray-800 p-1 rounded-full text-gray-400  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
-                  <span className='sr-only'>View notifications</span>
-                  <div className='h-6 w-auto' aria-hidden='true'>
-                    {props.username}
-                  </div>
-                </div>
-
                 {/* Profile dropdown */}
                 <Menu as='div' className='ml-3 relative'>
                   <div>
                     <Menu.Button className='bg-gray-800 flex text-sm rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
                       <span className='sr-only'>Open user menu</span>
+                      <div className='bg-gray-800 p-1 rounded-full text-gray-400  focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-800 focus:ring-white'>
+                        <span className='sr-only'>View notifications</span>
+                        <div
+                          className='flex h-6 w-auto text-base mr-3 max-w-sm sm:max-w-auto overflow-hidden'
+                          aria-hidden='true'
+                        >
+                          {props.username}
+                        </div>
+                      </div>
                       <img
                         className='h-8 w-8 rounded-full'
                         src={props.img}

@@ -102,7 +102,7 @@ const NewOperation = (props: Props) => {
               className='block w-full rounded-lg border border-gray-300 py-2 px-3 focus:border-blue-500 focus:outline-none focus:ring-blue-500 sm:text-sm'
               name='type'
               required
-              onChange={(e) => {}}
+              onChange={handleChange}
             >
               <option value='income'>Income</option>
               <option value='expense'>Expense</option>

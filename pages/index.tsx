@@ -29,6 +29,11 @@ const Home: NextPage<Props> = (props: Props) => {
     }
   };
 
+  function reformatDate(dateStr: string) {
+    let dArr = dateStr.split('-'); // ex input "2010-01-18"
+    return dArr[2] + '/' + dArr[1] + '/' + dArr[0]; //ex out: "18/01/10"
+  }
+
   if (props.operations.length === 0)
     return (
       <div>
@@ -88,7 +93,7 @@ const Home: NextPage<Props> = (props: Props) => {
                   {operation.amount}
                 </td>
                 <td className='p-3 text-sm text-gray-700 whitespace-nowrap text-center'>
-                  {operation.date.substring(0, 10)}
+                  {reformatDate(operation.date.substring(0, 10))}
                 </td>
                 <td className='p-3 text-sm whitespace-nowrap'>
                   <span
