@@ -16,6 +16,15 @@ export interface Operation {
   category?: string;
 }
 
+export interface Pagination {
+  count: number;
+  pageCount: number;
+}
+
+export interface Response {
+  pagination: Pagination;
+  items: Operation[];
+}
 export interface Session {
   expires: Date;
   user: User;
@@ -28,6 +37,7 @@ export interface User {
 }
 
 export interface Props {
+  pagedOperations: Response;
   operations: Operation[];
   session: Session;
   expenses: Operation[];

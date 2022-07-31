@@ -5,10 +5,7 @@ import { signOut } from 'next-auth/react';
 import { MenuIcon } from '../icons';
 import { NavbarProps } from '../../utils/types';
 
-const navigation = [
-  { name: 'Home', href: '/' },
-  { name: 'Categories', href: '/categories' },
-];
+const navigation = [{ name: 'Home', href: '/' }];
 
 function classNames(...classes: String[]) {
   return classes.filter(Boolean).join(' ');
