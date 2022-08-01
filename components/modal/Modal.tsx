@@ -3,6 +3,7 @@ import { Dialog, Transition } from '@headlessui/react';
 import { ModalProps } from '../../utils/types';
 
 export default function Modal(props: ModalProps) {
+  const [isLoading, setIsLoading] = useState(false);
   const [isOpen, setIsOpen] = useState(false);
 
   function closeModal() {
@@ -14,8 +15,8 @@ export default function Modal(props: ModalProps) {
   }
 
   function handleDelete() {
+    setIsLoading(true);
     props.function();
-    setIsOpen(false);
   }
 
   return (
@@ -74,7 +75,19 @@ export default function Modal(props: ModalProps) {
                       className='inline-flex justify-center rounded-md border border-transparent bg-red-500 px-4 py-2 text-sm font-medium text-white hover:bg-red-400 focus:outline-none focus-visible:ring-2 focus-visible:ring-blue-500 focus-visible:ring-offset-2'
                       onClick={handleDelete}
                     >
-                      Yes!
+                      {isLoading ? (
+                        <div className='flex items-center justify-center p-0 m-0'>
+                          Deleting...
+                          <div className='flex items-center justify-center'>
+                            <img
+                              className='h-6 w-6 flex items-center'
+                              src='/img/rings.svg'
+                            ></img>
+                          </div>
+                        </div>
+                      ) : (
+                        'Yes!'
+                      )}
                     </button>
                     <button
                       type='button'

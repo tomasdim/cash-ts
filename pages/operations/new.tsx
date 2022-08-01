@@ -13,8 +13,10 @@ const NewOperation = (props: Props) => {
     category: '',
     author: '',
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    setIsLoading(true);
     e.preventDefault();
     await createOperation();
     console.log('submit');
@@ -119,7 +121,16 @@ const NewOperation = (props: Props) => {
               onChange={handleChange}
             ></input>
             <button className='w-full p-3 mt-3 rounded-lg bg-blue-400 text-white border-red-300'>
-              Save
+              {isLoading ? (
+                <div className='flex items-center justify-center'>
+                  <img
+                    className=' flex items-centerw-10 h-10'
+                    src='/img/rings.svg'
+                  ></img>
+                </div>
+              ) : (
+                'Save'
+              )}
             </button>
           </form>
         </div>

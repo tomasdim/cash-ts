@@ -10,6 +10,8 @@ import { useState, useEffect } from 'react';
 import { LeftArrow, RightArrow } from '../components/icons';
 
 const Home: NextPage<Props> = (props: Props) => {
+  const [isLoadingNew, setIsLoadingNew] = useState(false);
+  const [isLoadingCat, setIsLoadingCat] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
   const [currentPageCount, setCurrentPageCount] = useState(
     props.pagedOperations.pagination.pageCount
@@ -26,6 +28,11 @@ const Home: NextPage<Props> = (props: Props) => {
   const sumInc = inc.reduce((accumulator, object) => {
     return accumulator + object.amount;
   }, 0);
+
+  const createOperation = () => {
+    setIsLoadingNew(true);
+    router.push(`/operations/new`);
+  };
 
   const handleDelete = async (id: string) => {
     try {
@@ -54,11 +61,13 @@ const Home: NextPage<Props> = (props: Props) => {
       `https://cash-ts.vercel.app/api/operations?page=1&category=${e.target.value}&author=${props.session.user.name}`,
       { method: 'GET' }
     );
+    setIsLoadingCat(true);
     setCurrentCategory(e.target.value);
     setCurrentPage(1);
     const resFiltered = await filteredOperations.json();
     setNewOperation(resFiltered);
     setCurrentPageCount(resFiltered.pagination.pageCount);
+    setIsLoadingCat(false);
   };
 
   const handlePrevious = async () => {
@@ -114,6 +123,16 @@ const Home: NextPage<Props> = (props: Props) => {
         <h1 className='text-green-800 underline flex justify-center text-lg font-semibold'>
           Filter by category:
         </h1>
+        {isLoadingCat ? (
+          <div className='flex items-center justify-center'>
+            <img
+              className='rounded-lg bg-green-800 flex items-center w-6 h-6'
+              src='/img/rings.svg'
+            ></img>
+          </div>
+        ) : (
+          ''
+        )}
         <select className='border border-green-800 m-1' onChange={handleChange}>
           <option value=''>All</option>
           {filteredCategories.map((cat: string) => (
@@ -198,9 +217,18 @@ const Home: NextPage<Props> = (props: Props) => {
       <div className='w-full justify-around pt-10 flex items-center'>
         <button
           className='bg-blue-500 p-3  rounded-lg text-white hover:bg-blue-400'
-          onClick={() => router.push(`/operations/new`)}
+          onClick={createOperation}
         >
-          Create new operation
+          {isLoadingNew ? (
+            <div className='flex items-center justify-center'>
+              <img
+                className='flex items-center w-40 h-6'
+                src='/img/rings.svg'
+              ></img>
+            </div>
+          ) : (
+            'Create new operation'
+          )}
         </button>
         <div className='flex'>
           <button
